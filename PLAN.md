@@ -107,7 +107,9 @@ comfortably inside the Convex free plan's limits. If we don't, we find out early
 
 ### `choice` — multiple choice
 Options list, tap one. Guests may add their own option (see below).
-Resolve by picking an option, or **"none of these"** → everything greys out.
+Resolve by picking an option, or **"none of these"** — which asks what it actually was.
+That write-in appears on the presenter as its own green row marked "nobody", and phones
+read "The answer was …" rather than a bare "none of the options were right".
 
 ### `yesno`
 Same machinery, fixed two options, different styling (big split Yes / No). Guest options disabled.
@@ -175,6 +177,10 @@ does, and it reads as cropped. At a fixed 16:9 it cannot crop anything. Measured
 | 1920 × 1080 | 320 | 1600 × 900 |
 | 1920 × 1080 | 180 (min) | 1740 × 979 |
 
+- Bars are **ranked by vote count**, most popular at the top, and glide between positions
+  as votes land. Ties hold their original order so level options do not flicker past each
+  other. The reorder is a FLIP measured synchronously, not in `requestAnimationFrame` — a
+  backgrounded tab freezes rAF and would strand rows mid-move.
 - Bars animate with a spring so a shifting vote is visible from across the room.
 - Vote count shown alongside the percentage.
 - On resolve: correct bar → green, others → dim grey, a subtle flash.
