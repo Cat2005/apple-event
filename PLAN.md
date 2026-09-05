@@ -353,14 +353,35 @@ npx tsx scripts/sim.ts --voters 60 --scenario stampede
 npx convex run setup:reset '{"token":"<ADMIN_TOKEN>"}'   # wipe votes before guests arrive
 ```
 
+**Live: https://apple-event.vercel.app**
+
 | Surface | URL |
 |---|---|
-| Phone | `/` |
-| Presenter | `/presenter` |
-| Admin | `/control/<ADMIN_TOKEN>` |
+| Phone | https://apple-event.vercel.app |
+| Presenter | https://apple-event.vercel.app/presenter |
+| Admin | https://apple-event.vercel.app/control/&lt;ADMIN_TOKEN&gt; |
 
-`ADMIN_TOKEN` lives in `.env.local` and on the Convex deployment. Convex project
-`apple-watch-party`, dev deployment `valuable-lion-455`.
+| | |
+|---|---|
+| Repo | https://github.com/Cat2005/apple-event (public) |
+| Convex prod | `dutiful-gull-932` |
+| Convex dev | `valuable-lion-455` (localhost only) |
+| Vercel project | `apple-event` |
+
+`ADMIN_TOKEN` lives in `.env.local` and on both Convex deployments. It is **never** a build
+env var — the admin page reads it from the URL path, so it stays out of the client bundle.
+Never add it as `NEXT_PUBLIC_*`; that would ship it to every guest.
+
+Vercel builds with a plain `npm run build`. Convex is deployed separately with
+`npx convex deploy`, so **changing anything in `convex/` needs that command** — a
+`git push` alone won't update the backend.
+
+Production commands take `--prod`:
+
+```bash
+npx convex run setup:reset '{"token":"<ADMIN_TOKEN>"}' --prod
+npx convex data votes --prod
+```
 
 **Event start: 9 September, 18:00** (confirmed off the YouTube stream page).
 
