@@ -31,6 +31,7 @@ export default defineSchema({
     votingLocked: v.boolean(),
     status: v.union(v.literal("draft"), v.literal("live"), v.literal("resolved")),
     resolvedOptionId: v.optional(v.union(v.string(), v.null())), // null = "none of these"
+    resolvedLabel: v.optional(v.string()), // what it actually was, when no option matched
     resolvedNumber: v.optional(v.number()),
     order: v.number(),
   }).index("by_order", ["order"]),

@@ -81,3 +81,24 @@
   opacity: 0.35;
   border-color: var(--eliminated);
 }
+
+/* The answer that was not on the board. */
+.actual {
+  animation: reveal 380ms var(--spring);
+}
+
+.nobody {
+  font-size: clamp(11px, calc(var(--rail-w, 440px) * 0.03), 14px);
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Deliberately no opacity here. A backgrounded tab freezes animations at their
+   first frame, and this row is the answer reveal — worst case it should arrive
+   8px out of place, never invisible. */
+@keyframes reveal {
+  from {
+    transform: translateY(8px);
+  }
+}

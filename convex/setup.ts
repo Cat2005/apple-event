@@ -100,6 +100,7 @@ export const reset = mutation({
         votingLocked: false,
         resolvedOptionId: undefined,
         resolvedNumber: undefined,
+        resolvedLabel: undefined,
         options: question.options.filter((o) => !o.addedBy), // drop guest additions
       });
     }

@@ -124,8 +124,9 @@ export const resolve = mutation({
     questionId: v.id("questions"),
     optionId: v.optional(v.union(v.string(), v.null())),
     number: v.optional(v.number()),
+    label: v.optional(v.string()), // the real answer, when it was none of the options
   },
-  handler: async (ctx, { token, questionId, optionId, number }) => {
+  handler: async (ctx, { token, questionId, optionId, number, label }) => {
     requireAdmin(token);
     const question = await requireQuestion(ctx, questionId);
     if (question.kind === "number") {
@@ -137,7 +138,12 @@ export const resolve = mutation({
     if (optionId !== null && !question.options.some((o) => o.id === optionId)) {
       throw new Error("That option is not on this question");
     }
-    await ctx.db.patch(questionId, { status: "resolved", votingLocked: true, resolvedOptionId: optionId });
+    await ctx.db.patch(questionId, {
+      status: "resolved",
+      votingLocked: true,
+      resolvedOptionId: optionId,
+      resolvedLabel: optionId === null ? label?.trim() || undefined : undefined,
+    });
   },
 });
 
@@ -151,6 +157,7 @@ export const unresolve = mutation({
       votingLocked: false,
       resolvedOptionId: undefined,
       resolvedNumber: undefined,
+      resolvedLabel: undefined,
     });
   },
 });

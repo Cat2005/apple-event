@@ -21,6 +21,8 @@ export function LiveQuestion({ token, question, total, counts }: Props) {
   const removeOption = useMutation(api.options.remove);
   const clearQuestion = useMutation(api.event.clearQuestion);
   const [answer, setAnswer] = useState("");
+  const [otherOpen, setOtherOpen] = useState(false);
+  const [otherLabel, setOtherLabel] = useState("");
 
   const resolved = question.status === "resolved";
 
@@ -78,12 +80,49 @@ export function LiveQuestion({ token, question, total, counts }: Props) {
               )}
             </span>
           ))}
-          <button
-            className={s.btn}
-            onClick={() => void resolve({ token, questionId: question._id, optionId: null })}
-          >
-            None of these
-          </button>
+          {otherOpen ? (
+            <>
+              <input
+                className={s.input}
+                autoFocus
+                placeholder="What was it actually?"
+                value={otherLabel}
+                onChange={(e) => setOtherLabel(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && otherLabel.trim()) {
+                    void resolve({
+                      token,
+                      questionId: question._id,
+                      optionId: null,
+                      label: otherLabel,
+                    });
+                    setOtherOpen(false);
+                  }
+                }}
+              />
+              <button
+                className={`${s.btn} ${s.good}`}
+                onClick={() => {
+                  void resolve({
+                    token,
+                    questionId: question._id,
+                    optionId: null,
+                    label: otherLabel,
+                  });
+                  setOtherOpen(false);
+                }}
+              >
+                Resolve
+              </button>
+              <button className={s.btn} onClick={() => setOtherOpen(false)}>
+                Cancel
+              </button>
+            </>
+          ) : (
+            <button className={s.btn} onClick={() => setOtherOpen(true)}>
+              None of these
+            </button>
+          )}
         </div>
       )}
 

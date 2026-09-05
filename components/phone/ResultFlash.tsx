@@ -37,9 +37,10 @@ function summarise(question: Doc<"questions">, myVote: Doc<"votes"> | null) {
 
   const correct = myVote.optionId === question.resolvedOptionId;
   const answer = question.options.find((o) => o.id === question.resolvedOptionId);
+  const actual = answer?.label ?? question.resolvedLabel;
   return {
     headline: correct ? "Called it" : "Not this time",
-    detail: answer ? `The answer was ${answer.label}` : "None of the options were right",
+    detail: actual ? `The answer was ${actual}` : "None of the options were right",
     right: correct,
   };
 }
