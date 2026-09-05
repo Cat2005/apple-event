@@ -26,9 +26,13 @@ export function buildHistogram(numbers: number[], answer?: number): Histogram | 
   const hi = Math.max(...points);
   const allIntegers = points.every(Number.isInteger);
 
-  // Aim for roughly a dozen columns; never narrower than 1 for whole numbers.
+  // Whole numbers over a small range get one bar per number, so a bar can be
+  // read off the axis directly. Otherwise aim for roughly ten columns.
   const span = hi - lo;
-  let width = span === 0 ? 1 : niceStep(span / 12);
+  let width: number;
+  if (span === 0) width = 1;
+  else if (allIntegers && span <= 20) width = 1;
+  else width = niceStep(span / 10);
   if (allIntegers) width = Math.max(1, Math.round(width));
 
   const start = Math.floor(lo / width) * width;

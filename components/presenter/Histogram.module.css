@@ -86,34 +86,41 @@
   white-space: nowrap;
 }
 
-.scale {
+/* One slot per bar, matching .columns exactly, so a label sits under its bar. */
+.ticks {
   display: flex;
-  justify-content: space-between;
-  font-size: clamp(10px, calc(var(--rail-w, 440px) * 0.026), 13px);
-  color: var(--text-dim);
-  font-variant-numeric: tabular-nums;
+  gap: 2px;
+  margin-top: 5px;
 }
 
-.stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(56px, 1fr));
+.tick {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  font-size: clamp(9px, calc(var(--rail-w, 440px) * 0.025), 12px);
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.mean {
+  display: flex;
+  align-items: baseline;
   gap: var(--sp-3);
-  padding-top: var(--sp-2);
+  margin: 0;
+  padding-top: var(--sp-3);
   border-top: 1px solid var(--border);
 }
 
-.stat {
-  display: grid;
-  gap: 2px;
-}
-
-.statLabel {
+.meanLabel {
   font-size: clamp(9px, calc(var(--rail-w, 440px) * 0.026), 12px);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   color: var(--text-dim);
 }
 
-.statValue {
-  font-size: clamp(12px, calc(var(--rail-w, 440px) * 0.04), 21px);
+.meanValue {
+  font-size: clamp(14px, calc(var(--rail-w, 440px) * 0.05), 26px);
   font-weight: 600;
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;

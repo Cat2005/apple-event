@@ -25,6 +25,14 @@ describe("building the histogram", () => {
     for (const b of h.buckets) expect(Number.isInteger(b.end - b.start)).toBe(true);
   });
 
+  it("gives a bar per number when the counts are small, so the axis is readable", () => {
+    const h = buildHistogram([4, 5, 5, 10, 20])!;
+    expect(h.buckets[0].end - h.buckets[0].start).toBe(1);
+    expect(h.buckets.find((b) => b.start === 5)!.count).toBe(2);
+    expect(h.buckets.find((b) => b.start === 10)!.count).toBe(1);
+    expect(h.buckets.find((b) => b.start === 20)!.count).toBe(1);
+  });
+
   it("spreads prices across readable buckets", () => {
     const h = buildHistogram([699, 899, 999, 1099, 1199, 1299, 1499, 1999, 2599])!;
     expect(h.buckets.length).toBeGreaterThanOrEqual(6);
