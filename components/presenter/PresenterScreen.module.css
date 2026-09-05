@@ -1,0 +1,29 @@
+.blank {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  color: var(--text-dim);
+  font-size: 14px;
+}
+
+.split,
+.dock {
+  position: relative; /* the resize handle is absolutely positioned against this */
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+/* Stream left, voting rail right. The column width is set inline and dragged at
+   the divider — see RailResizer. This value is only the pre-hydration default. */
+.split {
+  display: grid;
+  grid-template-columns: 1fr 440px;
+}
+
+/* Fallback: no embed, the whole page is the rail and you snap YouTube beside it. */
+.dock {
+  display: grid;
+  grid-template-columns: 1fr;
+  --rail-w: 760px; /* dock mode is full width; keep type at its upper end */
+}

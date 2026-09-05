@@ -1,0 +1,37 @@
+.screen {
+  min-height: 100dvh;
+  padding: max(env(safe-area-inset-top), var(--sp-5)) var(--sp-4)
+    max(env(safe-area-inset-bottom), var(--sp-5));
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
+
+.wordmark {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--text-dim);
+}
+
+.tally {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-dim);
+}
+
+.question {
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}

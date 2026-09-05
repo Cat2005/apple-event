@@ -1,0 +1,34 @@
+.zone {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 380px;
+  height: 200px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: var(--sp-5);
+}
+
+.dock {
+  width: 340px;
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 260ms var(--ease),
+    transform 260ms var(--ease);
+  pointer-events: none;
+}
+
+.open {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.frame {
+  width: 100%;
+  height: 152px;
+  border: 0;
+  border-radius: var(--r-md);
+}

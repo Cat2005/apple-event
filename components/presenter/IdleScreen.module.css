@@ -1,0 +1,42 @@
+.screen {
+  position: relative;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.centre {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--sp-4);
+  text-align: center;
+  pointer-events: none;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(38px, 5vw, 86px);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+}
+
+.joined {
+  margin: 0;
+  font-size: clamp(14px, 1.2vw, 19px);
+  color: var(--text-dim);
+}
+
+.joined strong {
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.corner {
+  --qr-size: 148px;
+  position: absolute;
+  left: var(--sp-7);
+  bottom: var(--sp-7);
+}

@@ -1,0 +1,96 @@
+.wrap {
+  display: grid;
+  gap: var(--sp-5);
+}
+
+.plot {
+  position: relative;
+  height: 130px;
+  padding-bottom: 1px;
+}
+
+.axis {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--border);
+}
+
+.dot {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  margin-left: -5.5px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  transition:
+    left 460ms var(--spring),
+    bottom 460ms var(--spring),
+    background 300ms var(--ease);
+}
+
+.closestDot {
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-dim);
+}
+
+.answer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--accent);
+  animation: drop 420ms var(--spring) both;
+}
+
+.answerLabel {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #04220e;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(56px, 1fr));
+  gap: var(--sp-3);
+}
+
+.stat {
+  display: grid;
+  gap: 2px;
+}
+
+.statLabel {
+  font-size: clamp(9px, calc(var(--rail-w, 440px) * 0.026), 12px);
+  color: var(--text-dim);
+}
+
+.statValue {
+  font-size: clamp(12px, calc(var(--rail-w, 440px) * 0.04), 21px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.empty {
+  margin: 0;
+  color: var(--text-dim);
+}
+
+@keyframes drop {
+  from {
+    opacity: 0;
+    transform: scaleY(0.4);
+  }
+}

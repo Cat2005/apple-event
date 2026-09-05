@@ -1,0 +1,29 @@
+.wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  transition: background 200ms var(--ease);
+}
+
+.off {
+  background: var(--danger);
+  animation: blink 1s steps(2, start) infinite;
+}
+
+.label {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.3;
+  }
+}

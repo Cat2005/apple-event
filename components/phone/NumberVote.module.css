@@ -1,0 +1,71 @@
+.form {
+  display: grid;
+  gap: var(--sp-4);
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  padding: var(--sp-5) var(--sp-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+}
+
+.affix {
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--text-dim);
+}
+
+.input {
+  width: 100%;
+  min-width: 0;
+  background: none;
+  border: none;
+  outline: none;
+  text-align: center;
+  font-size: 44px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.input[type="number"] {
+  appearance: textfield;
+}
+
+.submit {
+  min-height: 54px;
+  border-radius: var(--r-md);
+  background: var(--text);
+  color: var(--bg);
+  font-size: 17px;
+  font-weight: 600;
+  transition: opacity 140ms var(--ease), transform 140ms var(--spring);
+}
+
+.submit:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.submit:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.current {
+  margin: 0;
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}

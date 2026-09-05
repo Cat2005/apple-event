@@ -1,0 +1,58 @@
+.trigger {
+  align-self: start;
+  padding: var(--sp-3) var(--sp-4);
+  font-size: 15px;
+  color: var(--text-dim);
+  border: 1px dashed var(--border);
+  border-radius: var(--r-md);
+  transition: color 140ms var(--ease), border-color 140ms var(--ease);
+}
+
+.trigger:active {
+  color: var(--text);
+  border-color: var(--border-hi);
+}
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--sp-2);
+}
+
+.input {
+  min-height: 50px;
+  padding: 0 var(--sp-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  outline: none;
+  font-size: 16px;
+}
+
+.input:focus {
+  border-color: var(--border-hi);
+}
+
+.submit {
+  padding: 0 var(--sp-5);
+  border-radius: var(--r-md);
+  background: var(--text);
+  color: var(--bg);
+  font-weight: 600;
+}
+
+.submit:disabled {
+  opacity: 0.35;
+}
+
+.error,
+.done {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-dim);
+}
+
+.error {
+  color: var(--danger);
+}

@@ -1,0 +1,21 @@
+.pane {
+  position: relative;
+  height: 100dvh;
+  background: #000;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+/*
+ * Pinned to 16:9 rather than filling the pane. Handing YouTube a box taller than
+ * the video lets it scale its own artwork to fill (the pre-stream countdown does
+ * exactly that, which reads as cropped). At a fixed 16:9 it cannot.
+ * width: min() keeps it inside both dimensions whatever the screen shape.
+ */
+.frame {
+  width: min(100%, calc(100dvh * 16 / 9));
+  aspect-ratio: 16 / 9;
+  border: 0;
+  display: block;
+}

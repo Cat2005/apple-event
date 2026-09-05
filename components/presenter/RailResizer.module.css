@@ -1,0 +1,53 @@
+.handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 18px;
+  margin-right: -9px;
+  z-index: 5;
+  cursor: col-resize;
+  touch-action: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+}
+
+.grip {
+  width: 1px;
+  height: 100%;
+  background: var(--border);
+  transition: background 160ms var(--ease), width 160ms var(--ease);
+}
+
+.handle:hover .grip,
+.handle:focus-visible .grip,
+.active .grip {
+  width: 3px;
+  background: var(--border-hi);
+}
+
+.active .grip {
+  background: var(--text);
+}
+
+.readout {
+  position: absolute;
+  top: var(--sp-5);
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--surface-hi);
+  border: 1px solid var(--border-hi);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* Full-screen while dragging so the pointer never enters the iframe. */
+.shield {
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+  cursor: col-resize;
+}

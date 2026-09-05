@@ -1,0 +1,32 @@
+.flash {
+  display: grid;
+  gap: var(--sp-1);
+  padding: var(--sp-4);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  animation: rise 320ms var(--spring) both;
+}
+
+.right {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+}
+
+.headline {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.detail {
+  font-size: 14px;
+  color: var(--text-dim);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
