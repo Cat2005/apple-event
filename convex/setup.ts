@@ -22,6 +22,12 @@ const SEED_QUESTIONS = [
     allowGuestOptions: false,
   },
   {
+    kind: "yesno" as const,
+    text: "Will John say good morning like Tim used to say?",
+    labels: ["Yes", "No"],
+    allowGuestOptions: false,
+  },
+  {
     kind: "number" as const,
     text: "How much will the iPhone 18 Pro cost?",
     labels: [],
