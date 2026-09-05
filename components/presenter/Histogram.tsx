@@ -21,9 +21,6 @@ export function Histogram({ question, numbers }: Props) {
   const nearest = answer !== undefined ? closestDistance(numbers, answer) : undefined;
   const mean = numbers.reduce((sum, n) => sum + n, 0) / numbers.length;
 
-  // Thin the axis labels until they stop colliding.
-  const labelEvery = Math.ceil(buckets.length / 9);
-
   return (
     <div className={styles.wrap}>
       <div className={styles.plot}>
@@ -41,11 +38,20 @@ export function Histogram({ question, numbers }: Props) {
 
             return (
               <div key={bucket.start} className={styles.column}>
-                <span className={styles.count}>{bucket.count > 0 ? bucket.count : ""}</span>
                 <div
-                  className={winning ? `${styles.bar} ${styles.winning}` : styles.bar}
+                  className={[
+                    styles.bar,
+                    bucket.count > 0 ? styles.filled : "",
+                    winning ? styles.winning : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
                   style={{ height: `${tallest === 0 ? 0 : (bucket.count / tallest) * 100}%` }}
-                />
+                >
+                  {bucket.count > 0 && (
+                    <span className={styles.value}>{axisLabel(bucket.start, width, question)}</span>
+                  )}
+                </div>
               </div>
             );
           })}
@@ -58,15 +64,6 @@ export function Histogram({ question, numbers }: Props) {
         )}
 
         <div className={styles.axis} />
-      </div>
-
-      {/* The number line: one slot per bar, so a label sits under its own bar. */}
-      <div className={styles.ticks}>
-        {buckets.map((bucket, i) => (
-          <span key={bucket.start} className={styles.tick}>
-            {i % labelEvery === 0 ? axisLabel(bucket.start, width, question) : ""}
-          </span>
-        ))}
       </div>
 
       <p className={styles.mean}>

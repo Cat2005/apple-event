@@ -25,12 +25,19 @@ describe("building the histogram", () => {
     for (const b of h.buckets) expect(Number.isInteger(b.end - b.start)).toBe(true);
   });
 
-  it("gives a bar per number when the counts are small, so the axis is readable", () => {
-    const h = buildHistogram([4, 5, 5, 10, 20])!;
+  it("gives a bar per number when the range is small, so each bar names itself", () => {
+    const h = buildHistogram([4, 5, 5, 10, 12])!;
     expect(h.buckets[0].end - h.buckets[0].start).toBe(1);
     expect(h.buckets.find((b) => b.start === 5)!.count).toBe(2);
     expect(h.buckets.find((b) => b.start === 10)!.count).toBe(1);
-    expect(h.buckets.find((b) => b.start === 20)!.count).toBe(1);
+    expect(h.buckets.find((b) => b.start === 12)!.count).toBe(1);
+  });
+
+  it("keeps the bars wide enough to hold a number", () => {
+    for (const guesses of [[0, 30], [5, 5, 8, 10, 20], [699, 2599], [1, 100]]) {
+      const h = buildHistogram(guesses)!;
+      expect(h.buckets.length, `for ${guesses}`).toBeLessThanOrEqual(13);
+    }
   });
 
   it("spreads prices across readable buckets", () => {
