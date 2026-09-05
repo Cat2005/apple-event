@@ -33,14 +33,61 @@
 
 .row {
   width: 100%;
-  display: grid;
-  gap: var(--sp-2);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
   padding: var(--sp-4);
   text-align: left;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--r-md);
-  transition: border-color 140ms var(--ease), opacity 140ms var(--ease);
+  transition:
+    border-color 140ms var(--ease),
+    background 140ms var(--ease),
+    opacity 140ms var(--ease);
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: var(--sp-2);
+}
+
+/* Answered: brighter ground and a filled tick, so a glance down the list tells
+   you what is left without reading any of it. */
+.row.done {
+  background: var(--surface-hi);
+  border-color: var(--border-hi);
+}
+
+.tick,
+.tickEmpty {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.tickEmpty {
+  border: 1.5px solid var(--eliminated);
+}
+
+.tick {
+  background: var(--text);
+}
+
+.tick::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 6px;
+  height: 11px;
+  border: solid var(--bg);
+  border-width: 0 2px 2px 0;
+  transform: translateY(-1px) rotate(45deg);
 }
 
 .row:active:not(:disabled) {

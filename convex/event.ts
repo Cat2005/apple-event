@@ -12,7 +12,13 @@ export const setMode = mutation({
   handler: async (ctx, { token, mode }) => {
     requireAdmin(token);
     const event = await requireEvent(ctx);
-    await ctx.db.patch(event._id, { mode });
+    // Going idle means nothing is on screen — so nothing stays marked as on
+    // screen either, in admin or on anyone's phone. Votes are untouched; push
+    // the question again to bring it back.
+    await ctx.db.patch(event._id, {
+      mode,
+      ...(mode === "idle" ? { activeQuestionId: undefined } : {}),
+    });
   },
 });
 

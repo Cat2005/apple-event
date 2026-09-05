@@ -3,9 +3,24 @@ import "@fontsource-variable/inter";
 import "./globals.css";
 import { Providers } from "./providers";
 
+const DESCRIPTION = "Live predictions for the Apple event.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL("https://apple-event.vercel.app"),
   title: "Apple Watch Party",
-  description: "Live predictions for the Apple event.",
+  description: DESCRIPTION,
+  // Shared links always read "Apple Watch Party", whatever the tab title says.
+  openGraph: {
+    title: "Apple Watch Party",
+    description: DESCRIPTION,
+    siteName: "Apple Watch Party",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Apple Watch Party",
+    description: DESCRIPTION,
+  },
 };
 
 export const viewport: Viewport = {

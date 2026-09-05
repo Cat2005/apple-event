@@ -42,20 +42,23 @@ export function QuestionSheet({ voterId, votes, activeQuestionId, onClose }: Pro
             return (
               <li key={question._id}>
                 <button
-                  className={styles.row}
+                  className={vote ? `${styles.row} ${styles.done}` : styles.row}
                   onClick={() => setOpenId(question._id)}
                   disabled={resolved && !vote}
                 >
-                  <span className={styles.text}>{question.text}</span>
-                  <span className={styles.meta}>
-                    <span className={vote ? styles.answered : styles.unanswered}>
-                      {summarise(question, vote)}
+                  <span className={styles.main}>
+                    <span className={styles.text}>{question.text}</span>
+                    <span className={styles.meta}>
+                      <span className={vote ? styles.answered : styles.unanswered}>
+                        {summarise(question, vote)}
+                      </span>
+                      {question._id === activeQuestionId && (
+                        <span className={styles.badge}>On screen</span>
+                      )}
+                      {resolved && <span className={styles.badge}>Closed</span>}
                     </span>
-                    {question._id === activeQuestionId && (
-                      <span className={styles.badge}>On screen</span>
-                    )}
-                    {resolved && <span className={styles.badge}>Closed</span>}
                   </span>
+                  <span className={vote ? styles.tick : styles.tickEmpty} aria-hidden />
                 </button>
               </li>
             );

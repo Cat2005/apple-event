@@ -56,9 +56,12 @@
   font-weight: inherit;
 }
 
-.selected {
-  background: var(--surface-hi);
-  border-color: var(--border-hi);
+/* Inverted rather than merely highlighted — you can tell you have voted from
+   across the room, and in a dark room a subtle tint is not enough. */
+.option.selected {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
 }
 
 .check {
@@ -66,7 +69,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: var(--text);
+  background: var(--bg);
   position: relative;
 }
 
@@ -77,21 +80,54 @@
   margin: auto;
   width: 5px;
   height: 9px;
-  border: solid var(--bg);
+  border: solid var(--text);
   border-width: 0 2px 2px 0;
   transform: translateY(-1px) rotate(45deg);
 }
 
-.correct {
+/* Resolution overrides the inverted "you picked this" state. */
+.option.correct {
   background: var(--accent-dim);
   border-color: var(--accent);
+  color: var(--text);
 }
 
-.correct .check {
+.option.correct .check {
   background: var(--accent);
 }
 
-.eliminated {
+.option.correct .check::after {
+  border-color: var(--bg);
+}
+
+.option.eliminated {
   opacity: 0.4;
+  background: var(--surface);
+  color: var(--text);
   border-color: var(--eliminated);
+}
+
+/* Picked, but wrong. Dimmer than an open option, brighter than the ones you
+   never chose, so you can still see what you went for. */
+.option.wrongPick {
+  opacity: 0.75;
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border-hi);
+}
+
+.option.wrongPick .check {
+  background: var(--text);
+}
+
+.option.wrongPick .check::after {
+  border-color: var(--bg);
+}
+
+.option.eliminated .check {
+  background: var(--text);
+}
+
+.option.eliminated .check::after {
+  border-color: var(--bg);
 }

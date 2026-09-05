@@ -17,28 +17,31 @@ export function ChoiceVote({ question, selectedId, locked, onSelect }: Props) {
   return (
     <ul className={isYesNo ? styles.listSplit : styles.list}>
       {question.options.map((option) => {
-        const selected = option.id === selectedId;
-        const correct = resolved && question.resolvedOptionId === option.id;
-        const eliminated = resolved && !correct;
+        const picked = option.id === selectedId;
+        // Exactly one state class per option. Stacking "selected" with
+        // "correct"/"eliminated" left the winner up to the cascade, and it
+        // resolved wrongly — white text on a white box after a question closed.
+        const state = !resolved
+          ? picked
+            ? styles.selected
+            : ""
+          : question.resolvedOptionId === option.id
+            ? styles.correct
+            : picked
+              ? styles.wrongPick
+              : styles.eliminated;
 
         return (
           <li key={option.id}>
             <button
               type="button"
               disabled={locked}
-              aria-pressed={selected}
-              className={[
-                styles.option,
-                selected ? styles.selected : "",
-                correct ? styles.correct : "",
-                eliminated ? styles.eliminated : "",
-              ]
-                .filter(Boolean)
-                .join(" ")}
+              aria-pressed={picked}
+              className={[styles.option, state].filter(Boolean).join(" ")}
               onClick={() => onSelect(option.id)}
             >
               <span className={styles.label}>{option.label}</span>
-              {selected && <span className={styles.check} aria-hidden />}
+              {picked && <span className={styles.check} aria-hidden />}
             </button>
           </li>
         );
