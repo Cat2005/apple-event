@@ -3,7 +3,7 @@
 import { Doc } from "@/convex/_generated/dataModel";
 import { ConnectionDot } from "@/components/common/ConnectionDot";
 import { JoinQR } from "./JoinQR";
-import { NumberLine } from "./NumberLine";
+import { Histogram } from "./Histogram";
 import { ResultBars } from "./ResultBars";
 import styles from "./VotingRail.module.css";
 
@@ -30,7 +30,7 @@ export function VotingRail({ question, results, joinUrl, joined, wide }: Props) 
             <h1 className={styles.question}>{question.text}</h1>
 
             {question.kind === "number" ? (
-              <NumberLine question={question} numbers={results?.numbers ?? []} />
+              <Histogram question={question} numbers={results?.numbers ?? []} />
             ) : (
               <ResultBars question={question} counts={results?.counts ?? {}} total={total} />
             )}

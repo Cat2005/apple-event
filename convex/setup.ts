@@ -6,7 +6,7 @@ const SEED_QUESTIONS = [
   {
     kind: "choice" as const,
     text: "What will Apple call the foldable iPhone?",
-    labels: ["iPhone Fold", "iPhone Flip", "iPhone Ultra", "iPhone X Fold"],
+    labels: ["iPhone Fold", "iPhone Flip", "iPhone Ultra", "iPhold"],
     allowGuestOptions: true,
   },
   {

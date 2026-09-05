@@ -44,6 +44,25 @@ export const add = mutation({
   },
 });
 
+/** Fix a label without disturbing the votes already cast on it. */
+export const rename = mutation({
+  args: {
+    token: v.string(),
+    questionId: v.id("questions"),
+    optionId: v.string(),
+    label: v.string(),
+  },
+  handler: async (ctx, { token, questionId, optionId, label }) => {
+    requireAdmin(token);
+    const question = await requireQuestion(ctx, questionId);
+    const tidied = tidyLabel(label);
+    if (!tidied) throw new Error("Give it a label");
+    await ctx.db.patch(questionId, {
+      options: question.options.map((o) => (o.id === optionId ? { ...o, label: tidied } : o)),
+    });
+  },
+});
+
 /** Deleting an option also clears every vote cast on it. */
 export const remove = mutation({
   args: { token: v.string(), questionId: v.id("questions"), optionId: v.string() },
