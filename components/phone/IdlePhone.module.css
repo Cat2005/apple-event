@@ -45,3 +45,18 @@
     transform: scale(1.25);
   }
 }
+
+.browse {
+  margin-top: var(--sp-3);
+  min-height: 48px;
+  padding: 0 var(--sp-5);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.browse:active {
+  border-color: var(--border-hi);
+}

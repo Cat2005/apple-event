@@ -14,6 +14,16 @@ export const active = query({
   },
 });
 
+/**
+ * Every question, for the phone's browse sheet. Guests can vote on any of them
+ * at any time; resolved ones come back locked. Small payload (a dozen rows) and
+ * it only re-fires when a question actually changes.
+ */
+export const all = query({
+  args: {},
+  handler: async (ctx) => await ctx.db.query("questions").withIndex("by_order").collect(),
+});
+
 export const list = query({
   args: { token: v.string() },
   handler: async (ctx, { token }) => {

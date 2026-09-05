@@ -35,3 +35,19 @@
   letter-spacing: -0.025em;
   text-wrap: balance;
 }
+
+.browse {
+  margin-top: auto;
+  min-height: 50px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-dim);
+}
+
+.browse:active {
+  border-color: var(--border-hi);
+  color: var(--text);
+}

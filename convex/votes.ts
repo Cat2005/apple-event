@@ -30,15 +30,18 @@ export const cast = mutation({
   },
 });
 
+/**
+ * Everything this device has voted on. One subscription per phone that only
+ * re-fires on that phone's own writes — cheaper than a per-question query and
+ * it powers the browse sheet as well as the live question.
+ */
 export const mine = query({
-  args: { voterId: v.string(), questionId: v.optional(v.id("questions")) },
-  handler: async (ctx, { voterId, questionId }) => {
-    if (!questionId) return null;
-    return await ctx.db
+  args: { voterId: v.string() },
+  handler: async (ctx, { voterId }) =>
+    await ctx.db
       .query("votes")
-      .withIndex("by_question_voter", (q) => q.eq("questionId", questionId).eq("voterId", voterId))
-      .unique();
-  },
+      .withIndex("by_voter", (q) => q.eq("voterId", voterId))
+      .collect(),
 });
 
 /** Presenter only. Phones never subscribe to this — see PLAN.md §3. */
