@@ -5,7 +5,7 @@
 
 .plot {
   position: relative;
-  height: clamp(110px, calc(var(--rail-w, 440px) * 0.42), 190px);
+  height: clamp(110px, calc(var(--rail-w, 300px) * 0.42), 190px);
 }
 
 .columns {
@@ -48,7 +48,7 @@
 }
 
 .value {
-  font-size: clamp(9px, calc(var(--rail-w, 440px) * 0.026), 13px);
+  font-size: clamp(9px, calc(var(--rail-w, 300px) * 0.026), 13px);
   line-height: 1;
   font-weight: 500;
   color: var(--text-dim);
@@ -95,7 +95,7 @@
   border-radius: 999px;
   background: var(--accent);
   color: #04220e;
-  font-size: clamp(11px, calc(var(--rail-w, 440px) * 0.03), 14px);
+  font-size: clamp(11px, calc(var(--rail-w, 300px) * 0.03), 14px);
   font-weight: 600;
   white-space: nowrap;
 }
@@ -110,14 +110,14 @@
 }
 
 .meanLabel {
-  font-size: clamp(9px, calc(var(--rail-w, 440px) * 0.026), 12px);
+  font-size: clamp(9px, calc(var(--rail-w, 300px) * 0.026), 12px);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--text-dim);
 }
 
 .meanValue {
-  font-size: clamp(14px, calc(var(--rail-w, 440px) * 0.05), 26px);
+  font-size: clamp(14px, calc(var(--rail-w, 300px) * 0.05), 26px);
   font-weight: 600;
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;

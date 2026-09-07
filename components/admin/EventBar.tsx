@@ -8,7 +8,7 @@ import s from "./adminControls.module.css";
 
 export function EventBar({ token, event }: { token: string; event: Doc<"event"> | null }) {
   const setMode = useMutation(api.event.setMode);
-  const setStreamMode = useMutation(api.event.setStreamMode);
+  const setLayout = useMutation(api.event.setLayout);
   const setSettings = useMutation(api.event.setSettings);
   const forceReload = useMutation(api.event.forceReload);
   const resetAll = useMutation(api.setup.reset);
@@ -35,15 +35,16 @@ export function EventBar({ token, event }: { token: string; event: Doc<"event"> 
         </button>
         <span style={{ flex: 1 }} />
         <button
-          className={s.btn}
-          onClick={() =>
-            void setStreamMode({
-              token,
-              streamMode: event.streamMode === "embed" ? "dock" : "embed",
-            })
-          }
+          className={event.layout === "dock" ? `${s.btn} ${s.on}` : s.btn}
+          onClick={() => void setLayout({ token, layout: "dock" })}
         >
-          Stream: {event.streamMode}
+          With dock
+        </button>
+        <button
+          className={event.layout === "fullscreen" ? `${s.btn} ${s.on}` : s.btn}
+          onClick={() => void setLayout({ token, layout: "fullscreen" })}
+        >
+          Fullscreen stream
         </button>
       </div>
 

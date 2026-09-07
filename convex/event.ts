@@ -22,12 +22,12 @@ export const setMode = mutation({
   },
 });
 
-export const setStreamMode = mutation({
-  args: { token: v.string(), streamMode: v.union(v.literal("embed"), v.literal("dock")) },
-  handler: async (ctx, { token, streamMode }) => {
+export const setLayout = mutation({
+  args: { token: v.string(), layout: v.union(v.literal("dock"), v.literal("fullscreen")) },
+  handler: async (ctx, { token, layout }) => {
     requireAdmin(token);
     const event = await requireEvent(ctx);
-    await ctx.db.patch(event._id, { streamMode });
+    await ctx.db.patch(event._id, { layout });
   },
 });
 

@@ -49,7 +49,7 @@ change things fast while building.
 event: {
   mode: "idle" | "stream",   // the stream and the question are independent
   activeQuestionId?: Id<"questions">,
-  streamMode: "embed" | "dock",
+  layout: "dock" | "fullscreen",   // dock = stream + voting dock; fullscreen = stream only
   youtubeVideoId: string,      // "39BalPDuTo0"
   spotifyUrl?: string,
   joinUrl: string,             // encoded into the QR

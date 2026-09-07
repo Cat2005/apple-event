@@ -6,24 +6,23 @@
   font-size: 14px;
 }
 
-.split,
-.dock {
+.docked,
+.fullscreen {
   position: relative; /* the resize handle is absolutely positioned against this */
   height: 100dvh;
   overflow: hidden;
   background: var(--bg);
 }
 
-/* Stream left, voting rail right. The column width is set inline and dragged at
+/* Stream left, voting dock right. The column width is set inline and dragged at
    the divider — see RailResizer. This value is only the pre-hydration default. */
-.split {
+.docked {
   display: grid;
-  grid-template-columns: 1fr 440px;
+  grid-template-columns: 1fr 300px;
 }
 
-/* Fallback: no embed, the whole page is the rail and you snap YouTube beside it. */
-.dock {
+/* No dock: the livestream owns the whole screen. */
+.fullscreen {
   display: grid;
   grid-template-columns: 1fr;
-  --rail-w: 760px; /* dock mode is full width; keep type at its upper end */
 }

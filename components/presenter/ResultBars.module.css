@@ -3,7 +3,7 @@
   margin: 0;
   padding: 0;
   display: grid;
-  gap: clamp(var(--sp-1), calc(var(--rail-w, 440px) * 0.022), var(--sp-3));
+  gap: clamp(var(--sp-1), calc(var(--rail-w, 300px) * 0.022), var(--sp-3));
 }
 
 .row {
@@ -30,14 +30,14 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--sp-3);
-  padding: clamp(8px, calc(var(--rail-w, 440px) * 0.036), 16px);
+  padding: clamp(8px, calc(var(--rail-w, 300px) * 0.036), 16px);
 }
 
 .label {
   display: flex;
   align-items: center;
   gap: var(--sp-2);
-  font-size: clamp(12px, calc(var(--rail-w, 440px) * 0.045), 24px);
+  font-size: clamp(12px, calc(var(--rail-w, 300px) * 0.045), 24px);
   font-weight: 500;
   letter-spacing: -0.02em;
 }
@@ -57,13 +57,13 @@
 }
 
 .pct {
-  font-size: clamp(13px, calc(var(--rail-w, 440px) * 0.052), 26px);
+  font-size: clamp(13px, calc(var(--rail-w, 300px) * 0.052), 26px);
   font-weight: 600;
   letter-spacing: -0.03em;
 }
 
 .count {
-  font-size: clamp(9px, calc(var(--rail-w, 440px) * 0.028), 13px);
+  font-size: clamp(9px, calc(var(--rail-w, 300px) * 0.028), 13px);
   color: var(--text-dim);
   min-width: 1.5ch;
   text-align: right;
@@ -88,7 +88,7 @@
 }
 
 .nobody {
-  font-size: clamp(11px, calc(var(--rail-w, 440px) * 0.03), 14px);
+  font-size: clamp(11px, calc(var(--rail-w, 300px) * 0.03), 14px);
   color: var(--text-dim);
   text-transform: uppercase;
   letter-spacing: 0.08em;

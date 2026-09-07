@@ -6,7 +6,7 @@ const KEY = "awp:railWidth";
 
 export const MIN_RAIL = 180;
 export const MAX_RAIL = 760;
-export const DEFAULT_RAIL = 440;
+export const DEFAULT_RAIL = 300;
 
 export function clampRail(width: number) {
   if (!Number.isFinite(width)) return DEFAULT_RAIL;

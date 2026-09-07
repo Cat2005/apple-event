@@ -12,14 +12,13 @@ type Props = {
   results: { total: number; counts: Record<string, number>; numbers: number[] } | null;
   joinUrl: string;
   joined: number | undefined;
-  wide: boolean;
 };
 
-export function VotingRail({ question, results, joinUrl, joined, wide }: Props) {
+export function VotingRail({ question, results, joinUrl, joined }: Props) {
   const total = results?.total ?? 0;
 
   return (
-    <section className={wide ? `${styles.rail} ${styles.wide}` : styles.rail}>
+    <section className={styles.rail}>
       <header className={styles.header}>
         <JoinQR url={joinUrl} />
       </header>

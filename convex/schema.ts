@@ -14,7 +14,9 @@ export default defineSchema({
     // question sits beside it depends on activeQuestionId, which is independent.
     mode: v.union(v.literal("idle"), v.literal("stream")),
     activeQuestionId: v.optional(v.id("questions")),
-    streamMode: v.union(v.literal("embed"), v.literal("dock")),
+    // How the stream is laid out: "dock" = stream with the voting dock beside it,
+    // "fullscreen" = the livestream and nothing else.
+    layout: v.union(v.literal("dock"), v.literal("fullscreen")),
     youtubeVideoId: v.string(),
     spotifyUrl: v.optional(v.string()),
     joinUrl: v.string(),

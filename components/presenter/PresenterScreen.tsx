@@ -32,28 +32,31 @@ export function PresenterScreen() {
     return <IdleScreen joinUrl={event.joinUrl} spotifyUrl={event.spotifyUrl} joined={joined} />;
   }
 
-  const embedding = event.streamMode === "embed";
+  if (event.layout === "fullscreen") {
+    return (
+      <main className={styles.fullscreen}>
+        <StreamPane videoId={event.youtubeVideoId} />
+      </main>
+    );
+  }
 
   return (
     <main
-      className={embedding ? styles.split : styles.dock}
+      className={styles.docked}
       style={
-        embedding
-          ? ({
-              gridTemplateColumns: `1fr ${railWidth}px`,
-              "--rail-w": `${railWidth}px`,
-            } as React.CSSProperties)
-          : undefined
+        {
+          gridTemplateColumns: `1fr ${railWidth}px`,
+          "--rail-w": `${railWidth}px`,
+        } as React.CSSProperties
       }
     >
-      {embedding && <StreamPane videoId={event.youtubeVideoId} />}
-      {embedding && <RailResizer width={railWidth} onChange={setRailWidth} />}
+      <StreamPane videoId={event.youtubeVideoId} />
+      <RailResizer width={railWidth} onChange={setRailWidth} />
       <VotingRail
         question={question ?? null}
         results={results ?? null}
         joinUrl={event.joinUrl}
         joined={joined}
-        wide={!embedding}
       />
     </main>
   );
