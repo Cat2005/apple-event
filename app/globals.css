@@ -11,6 +11,7 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
+  color-scheme: dark;
   background: var(--bg);
   color: var(--text);
   font-family: var(--font);
@@ -31,11 +32,14 @@ button {
   -webkit-tap-highlight-color: transparent;
 }
 
-input {
+input,
+textarea,
+select {
   font: inherit;
   color: inherit;
 }
 
 ::selection {
   background: var(--accent-dim);
+  color: var(--text);
 }
