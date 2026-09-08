@@ -1,6 +1,6 @@
 .pane {
   position: relative;
-  height: 100dvh;
+  height: 100%;
   background: #000;
   display: grid;
   place-items: center;

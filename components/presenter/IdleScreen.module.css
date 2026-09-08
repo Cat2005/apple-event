@@ -1,8 +1,23 @@
 .screen {
-  position: relative;
-  height: 100dvh;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
   overflow: hidden;
-  background: var(--bg);
+  background: transparent;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 420ms var(--ease),
+    visibility 0s linear 700ms;
+}
+
+.active {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 500ms var(--ease) 120ms,
+    visibility 0s linear 0s;
 }
 
 .centre {
@@ -12,6 +27,7 @@
   place-content: center;
   justify-items: center;
   gap: var(--sp-4);
+  transform: translateY(clamp(-105px, -12vh, -72px));
   text-align: center;
   pointer-events: none;
 }
@@ -39,4 +55,10 @@
   position: absolute;
   left: var(--sp-7);
   bottom: var(--sp-7);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen {
+    transition: none;
+  }
 }

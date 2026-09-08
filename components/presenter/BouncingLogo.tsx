@@ -7,11 +7,13 @@ const SPEED = 69; // px per second — 50% faster than the original 46px/s
 const RATIO = 317 / 257; // public/apple-logo.png, cropped to its artwork
 
 /** DVD-style bounce. Position lives in a ref so React never re-renders on a frame. */
-export function BouncingLogo({ width = 150 }: { width?: number }) {
+export function BouncingLogo({ active = true, width = 150 }: { active?: boolean; width?: number }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
+    if (!active) return;
+
     const wrap = wrapRef.current;
     const logo = logoRef.current;
     if (!wrap || !logo) return;
@@ -55,7 +57,7 @@ export function BouncingLogo({ width = 150 }: { width?: number }) {
 
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, []);
+  }, [active]);
 
   return (
     <div className={styles.wrap} ref={wrapRef} aria-hidden>

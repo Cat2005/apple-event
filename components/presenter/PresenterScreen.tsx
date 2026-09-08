@@ -27,24 +27,23 @@ export function PresenterScreen() {
     return <div className={styles.blank}>Not initialised — run `npx convex run setup:init`</div>;
   }
 
-  // The stream and the question are independent: "stream" mode keeps the livestream
-  // up whether or not a question is on screen.
-  if (event.mode === "idle") {
-    return <IdleScreen joinUrl={event.joinUrl} spotifyUrl={event.spotifyUrl} joined={joined} />;
-  }
-
-  const isRailCollapsed = event.layout === "fullscreen";
+  const isIdle = event.mode === "idle";
+  const isRailCollapsed = isIdle || event.layout === "fullscreen";
 
   return (
     <main
-      className={`${styles.shell} ${isRailCollapsed ? styles.fullscreen : styles.docked}`}
+      className={`${styles.shell} ${isRailCollapsed ? styles.fullscreen : styles.docked}${
+        isIdle ? ` ${styles.idle}` : ""
+      }`}
       style={
         {
           "--rail-w": `${railWidth}px`,
         } as React.CSSProperties
       }
     >
-      <StreamPane videoId={event.youtubeVideoId} />
+      <div className={styles.streamViewport}>
+        <StreamPane videoId={event.youtubeVideoId} />
+      </div>
       <RailResizer width={railWidth} onChange={setRailWidth} collapsed={isRailCollapsed} />
       <div className={styles.railViewport} aria-hidden={isRailCollapsed}>
         <div className={styles.railInner}>
@@ -58,12 +57,20 @@ export function PresenterScreen() {
       </div>
       <div
         className={`${styles.fullscreenQr}${
-          isRailCollapsed && event.showFullscreenQr ? ` ${styles.fullscreenQrVisible}` : ""
+          !isIdle && isRailCollapsed && event.showFullscreenQr
+            ? ` ${styles.fullscreenQrVisible}`
+            : ""
         }`}
-        aria-hidden={!isRailCollapsed || !event.showFullscreenQr}
+        aria-hidden={isIdle || !isRailCollapsed || !event.showFullscreenQr}
       >
         <JoinQR url={event.joinUrl} />
       </div>
+      <IdleScreen
+        active={isIdle}
+        joinUrl={event.joinUrl}
+        spotifyUrl={event.spotifyUrl}
+        joined={joined}
+      />
     </main>
   );
 }

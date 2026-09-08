@@ -6,15 +6,19 @@ import { SpotifyDock } from "./SpotifyDock";
 import styles from "./IdleScreen.module.css";
 
 type Props = {
+  active: boolean;
   joinUrl: string;
   spotifyUrl: string | undefined;
   joined: number | undefined;
 };
 
-export function IdleScreen({ joinUrl, spotifyUrl, joined }: Props) {
+export function IdleScreen({ active, joinUrl, spotifyUrl, joined }: Props) {
   return (
-    <main className={styles.screen}>
-      <BouncingLogo />
+    <div
+      className={`${styles.screen}${active ? ` ${styles.active}` : ""}`}
+      aria-hidden={!active}
+    >
+      <BouncingLogo active={active} />
 
       <div className={styles.centre}>
         <h1 className={styles.title}>Apple Watch Party</h1>
@@ -29,7 +33,7 @@ export function IdleScreen({ joinUrl, spotifyUrl, joined }: Props) {
         <JoinQR url={joinUrl} />
       </div>
 
-      <SpotifyDock url={spotifyUrl} />
-    </main>
+      {active ? <SpotifyDock url={spotifyUrl} /> : null}
+    </div>
   );
 }
