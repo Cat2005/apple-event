@@ -57,6 +57,9 @@ export const rename = mutation({
     const question = await requireQuestion(ctx, questionId);
     const tidied = tidyLabel(label);
     if (!tidied) throw new Error("Give it a label");
+    if (question.options.some((o) => o.id !== optionId && labelKey(o.label) === labelKey(tidied))) {
+      throw new Error("That's already on the list");
+    }
     await ctx.db.patch(questionId, {
       options: question.options.map((o) => (o.id === optionId ? { ...o, label: tidied } : o)),
     });
@@ -75,5 +78,30 @@ export const remove = mutation({
     for (const vote of await votesForQuestion(ctx, questionId)) {
       if (vote.optionId === optionId) await ctx.db.delete(vote._id);
     }
+  },
+});
+
+/**
+ * The host adding one from the queue editor. Same caps as a guest add, minus
+ * the one-per-person rule, and it leaves `addedBy` unset so the option reads as
+ * part of the question rather than something a guest wrote.
+ */
+export const addAsHost = mutation({
+  args: { token: v.string(), questionId: v.id("questions"), label: v.string() },
+  handler: async (ctx, { token, questionId, label }) => {
+    requireAdmin(token);
+    const question = await requireQuestion(ctx, questionId);
+    if (question.kind === "number") throw new Error("A number question has no options");
+
+    const tidied = tidyLabel(label);
+    if (!tidied) throw new Error("Give it a label");
+    if (question.options.length >= MAX_OPTIONS) throw new Error("This question is full");
+    if (question.options.some((o) => labelKey(o.label) === labelKey(tidied))) {
+      throw new Error("That's already on the list");
+    }
+
+    const id = nextOptionId(question.options);
+    await ctx.db.patch(questionId, { options: [...question.options, { id, label: tidied }] });
+    return id;
   },
 });

@@ -4,6 +4,7 @@ import { useMutation } from "convex/react";
 import { useState } from "react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
+import { cleanError } from "@/components/common/cleanError";
 import styles from "./AddOption.module.css";
 
 const MAX = 40;
@@ -59,10 +60,4 @@ export function AddOption({
       {error && <p className={styles.error}>{error}</p>}
     </form>
   );
-}
-
-/** Convex wraps thrown errors; show the humans just the message we wrote. */
-function cleanError(message: string) {
-  const match = message.match(/Uncaught Error:\s*(.*?)(\n|$)/);
-  return (match?.[1] ?? message).trim();
 }
