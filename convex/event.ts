@@ -37,6 +37,7 @@ export const setSettings = mutation({
     youtubeVideoId: v.optional(v.string()),
     spotifyUrl: v.optional(v.string()),
     joinUrl: v.optional(v.string()),
+    showFullscreenQr: v.optional(v.boolean()),
   },
   handler: async (ctx, { token, ...settings }) => {
     requireAdmin(token);
@@ -48,13 +49,16 @@ export const setSettings = mutation({
   },
 });
 
-/** Take the question off screen but leave the stream up. */
+/** Take the question off screen, leave the stream up, and close the sidebar. */
 export const clearQuestion = mutation({
   args: { token: v.string() },
   handler: async (ctx, { token }) => {
     requireAdmin(token);
     const event = await requireEvent(ctx);
-    await ctx.db.patch(event._id, { activeQuestionId: undefined });
+    await ctx.db.patch(event._id, {
+      activeQuestionId: undefined,
+      layout: "fullscreen",
+    });
   },
 });
 

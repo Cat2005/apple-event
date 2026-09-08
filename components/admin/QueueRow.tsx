@@ -18,16 +18,25 @@ const KIND_LABEL = { choice: "Choice", yesno: "Yes/No", number: "Number" } as co
 export function QueueRow({ token, question, onPush }: Props) {
   const remove = useMutation(api.questions.remove);
   const [editing, setEditing] = useState(false);
+  const status =
+    question.status === "resolved" ? "✓ Resolved" : question.status === "live" ? "Asked" : null;
 
   return (
     <li className={s.card}>
       <div className={s.spread}>
-        <span className={s.kicker}>
-          {KIND_LABEL[question.kind]}
-          {question.status === "resolved" && " · resolved"}
-          {question.status === "live" && " · asked"}
+        <span className={s.kicker}>{KIND_LABEL[question.kind]}</span>
+        <span className={s.rowMeta}>
+          {status && (
+            <span
+              className={`${s.statusBadge}${
+                question.status === "resolved" ? ` ${s.resolvedBadge}` : ""
+              }`}
+            >
+              {status}
+            </span>
+          )}
+          <span className={s.meta}>#{question.order}</span>
         </span>
-        <span className={s.meta}>#{question.order}</span>
       </div>
 
       {editing ? (
@@ -38,7 +47,7 @@ export function QueueRow({ token, question, onPush }: Props) {
 
           <div className={s.row}>
             <button className={`${s.btn} ${s.primary}`} onClick={onPush}>
-              Push live
+              {question.status === "resolved" ? "Display again" : "Push live"}
             </button>
             <button className={s.btn} onClick={() => setEditing(true)}>
               Edit

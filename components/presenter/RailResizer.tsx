@@ -7,12 +7,13 @@ import styles from "./RailResizer.module.css";
 type Props = {
   width: number;
   onChange: (width: number) => void;
+  collapsed?: boolean;
 };
 
 const STEP = 20;
 
 /** Drag the divider between the stream and the voting rail. */
-export function RailResizer({ width, onChange }: Props) {
+export function RailResizer({ width, onChange, collapsed = false }: Props) {
   const [dragging, setDragging] = useState(false);
 
   useEffect(() => {
@@ -34,18 +35,21 @@ export function RailResizer({ width, onChange }: Props) {
   return (
     <>
       <div
-        className={dragging ? `${styles.handle} ${styles.active}` : styles.handle}
-        style={{ right: width }}
+        className={`${styles.handle}${dragging ? ` ${styles.active}` : ""}${collapsed ? ` ${styles.collapsed}` : ""}`}
+        style={{ right: collapsed ? 0 : width }}
         role="separator"
         aria-orientation="vertical"
         aria-label="Resize the voting panel"
         aria-valuenow={width}
-        tabIndex={0}
+        aria-hidden={collapsed}
+        tabIndex={collapsed ? -1 : 0}
         onPointerDown={(event) => {
+          if (collapsed) return;
           event.preventDefault();
           setDragging(true);
         }}
         onKeyDown={(event) => {
+          if (collapsed) return;
           if (event.key === "ArrowLeft") onChange(clampRail(width + STEP));
           if (event.key === "ArrowRight") onChange(clampRail(width - STEP));
         }}

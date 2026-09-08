@@ -18,38 +18,76 @@ export function EventBar({ token, event }: { token: string; event: Doc<"event"> 
 
   if (!event) return null;
 
+  const isIdle = event.mode === "idle";
+
   return (
     <section className={s.card}>
-      <div className={s.row}>
-        <button
-          className={event.mode === "idle" ? `${s.btn} ${s.on}` : s.btn}
-          onClick={() => void setMode({ token, mode: "idle" })}
-        >
-          Idle screen
-        </button>
-        <button
-          className={event.mode === "stream" ? `${s.btn} ${s.on}` : s.btn}
-          onClick={() => void setMode({ token, mode: "stream" })}
-        >
-          Stream
-        </button>
-        <span style={{ flex: 1 }} />
-        <button
-          className={event.layout === "dock" ? `${s.btn} ${s.on}` : s.btn}
-          onClick={() => void setLayout({ token, layout: "dock" })}
-        >
-          With dock
-        </button>
-        <button
-          className={event.layout === "fullscreen" ? `${s.btn} ${s.on}` : s.btn}
-          onClick={() => void setLayout({ token, layout: "fullscreen" })}
-        >
-          Fullscreen stream
-        </button>
+      <div className={s.controlGrid}>
+        <fieldset className={s.controlGroup}>
+          <legend className={s.controlLabel}>Screen</legend>
+          <div className={s.segmented}>
+            <button
+              className={event.mode === "idle" ? `${s.segment} ${s.on}` : s.segment}
+              aria-pressed={event.mode === "idle"}
+              onClick={() => void setMode({ token, mode: "idle" })}
+            >
+              Idle
+            </button>
+            <button
+              className={event.mode === "stream" ? `${s.segment} ${s.on}` : s.segment}
+              aria-pressed={event.mode === "stream"}
+              onClick={() => void setMode({ token, mode: "stream" })}
+            >
+              Stream
+            </button>
+          </div>
+          <span className={s.controlHint}>
+            {isIdle ? "Shows the waiting screen." : "Shows the livestream."}
+          </span>
+        </fieldset>
+
+        <fieldset className={s.controlGroup} disabled={isIdle}>
+          <legend className={s.controlLabel}>Sidebar</legend>
+          <div className={s.segmented}>
+            <button
+              className={event.layout === "dock" ? `${s.segment} ${s.on}` : s.segment}
+              aria-pressed={event.layout === "dock"}
+              onClick={() => void setLayout({ token, layout: "dock" })}
+            >
+              Show
+            </button>
+            <button
+              className={event.layout === "fullscreen" ? `${s.segment} ${s.on}` : s.segment}
+              aria-pressed={event.layout === "fullscreen"}
+              onClick={() => void setLayout({ token, layout: "fullscreen" })}
+            >
+              Hide
+            </button>
+          </div>
+          <label className={s.checkRow}>
+            <input
+              className={s.checkInput}
+              type="checkbox"
+              checked={event.showFullscreenQr ?? false}
+              onChange={(e) =>
+                void setSettings({ token, showFullscreenQr: e.target.checked })
+              }
+            />
+            <span>
+              <span className={s.checkTitle}>Show QR when hidden</span>
+              <span className={s.checkHint}>Pins the join code over the stream.</span>
+            </span>
+          </label>
+          {isIdle && <span className={s.controlHint}>Available while streaming.</span>}
+        </fieldset>
       </div>
 
-      <div className={s.row}>
-        <button className={s.btn} onClick={() => setOpenSettings((v) => !v)}>
+      <div className={s.actionRow}>
+        <button
+          className={openSettings ? `${s.btn} ${s.on}` : s.btn}
+          aria-expanded={openSettings}
+          onClick={() => setOpenSettings((v) => !v)}
+        >
           Settings
         </button>
         <button
@@ -63,30 +101,49 @@ export function EventBar({ token, event }: { token: string; event: Doc<"event"> 
       </div>
 
       {openSettings && (
-        <>
-          <div className={s.row}>
-            <input
-              className={s.input}
-              value={joinUrl}
-              placeholder="Join URL (goes in the QR)"
-              onChange={(e) => setJoinUrl(e.target.value)}
-            />
-            <input
-              className={s.input}
-              value={spotifyUrl}
-              placeholder="Spotify playlist URL"
-              onChange={(e) => setSpotifyUrl(e.target.value)}
-            />
+        <div className={s.settingsPanel}>
+          <div className={s.fieldGrid}>
+            <label className={s.field}>
+              <span className={s.fieldLabel}>Join URL</span>
+              <input
+                className={s.input}
+                type="url"
+                inputMode="url"
+                value={joinUrl}
+                placeholder="https://example.com/join"
+                onChange={(e) => setJoinUrl(e.target.value)}
+              />
+              <span className={s.fieldHint}>Encoded into the guest QR code.</span>
+            </label>
+            <label className={s.field}>
+              <span className={s.fieldLabel}>Spotify playlist</span>
+              <input
+                className={s.input}
+                type="url"
+                inputMode="url"
+                value={spotifyUrl}
+                placeholder="https://open.spotify.com/playlist/…"
+                onChange={(e) => setSpotifyUrl(e.target.value)}
+              />
+              <span className={s.fieldHint}>Optional music for the idle screen.</span>
+            </label>
+          </div>
+
+          <div className={s.settingsActions}>
             <button
               className={`${s.btn} ${s.primary}`}
               onClick={() => void setSettings({ token, joinUrl, spotifyUrl })}
             >
-              Save
+              Save settings
             </button>
           </div>
 
           {/* Kept behind Settings on purpose: a mis-tap here mid-event wipes the night. */}
-          <div className={s.row}>
+          <div className={s.dangerZone}>
+            <div>
+              <span className={s.dangerTitle}>Reset event data</span>
+              <span className={s.fieldHint}>Wipes test data. Questions are kept.</span>
+            </div>
             <button
               className={`${s.btn} ${s.bad}`}
               onClick={() => {
@@ -103,9 +160,8 @@ export function EventBar({ token, event }: { token: string; event: Doc<"event"> 
             >
               Reset all votes
             </button>
-            <span className={s.meta}>Wipes test data. Questions are kept.</span>
           </div>
-        </>
+        </div>
       )}
     </section>
   );

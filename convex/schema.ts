@@ -15,8 +15,9 @@ export default defineSchema({
     mode: v.union(v.literal("idle"), v.literal("stream")),
     activeQuestionId: v.optional(v.id("questions")),
     // How the stream is laid out: "dock" = stream with the voting dock beside it,
-    // "fullscreen" = the livestream and nothing else.
+    // "fullscreen" = the livestream without the voting rail.
     layout: v.union(v.literal("dock"), v.literal("fullscreen")),
+    showFullscreenQr: v.optional(v.boolean()),
     youtubeVideoId: v.string(),
     spotifyUrl: v.optional(v.string()),
     joinUrl: v.string(),

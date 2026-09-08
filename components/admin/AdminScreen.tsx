@@ -25,7 +25,6 @@ export function AdminScreen({ token }: { token: string }) {
   }
 
   const live = questions.find((q) => q._id === event?.activeQuestionId) ?? null;
-  const queue = questions.filter((q) => q._id !== live?._id);
 
   return (
     <main className={styles.screen}>
@@ -36,21 +35,27 @@ export function AdminScreen({ token }: { token: string }) {
 
       <EventBar token={token} event={event} />
 
-      {live && (
-        <LiveQuestion token={token} question={live} total={results?.total ?? 0} counts={results?.counts ?? {}} />
-      )}
-
       <section className={styles.section}>
-        <h2 className={styles.subheading}>Queue</h2>
+        <h2 className={styles.subheading}>Questions</h2>
         <ul className={styles.queue}>
-          {queue.map((question) => (
-            <QueueRow
-              key={question._id}
-              token={token}
-              question={question}
-              onPush={() => void pushLive({ token, questionId: question._id })}
-            />
-          ))}
+          {questions.map((question) =>
+            question._id === live?._id ? (
+              <LiveQuestion
+                key={question._id}
+                token={token}
+                question={question}
+                total={results?.total ?? 0}
+                counts={results?.counts ?? {}}
+              />
+            ) : (
+              <QueueRow
+                key={question._id}
+                token={token}
+                question={question}
+                onPush={() => void pushLive({ token, questionId: question._id })}
+              />
+            ),
+          )}
         </ul>
       </section>
 

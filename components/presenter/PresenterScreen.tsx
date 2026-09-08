@@ -9,6 +9,7 @@ import { RailResizer } from "./RailResizer";
 import { IdleScreen } from "./IdleScreen";
 import { StreamPane } from "./StreamPane";
 import { VotingRail } from "./VotingRail";
+import { JoinQR } from "./JoinQR";
 import styles from "./PresenterScreen.module.css";
 
 export function PresenterScreen() {
@@ -32,32 +33,37 @@ export function PresenterScreen() {
     return <IdleScreen joinUrl={event.joinUrl} spotifyUrl={event.spotifyUrl} joined={joined} />;
   }
 
-  if (event.layout === "fullscreen") {
-    return (
-      <main className={styles.fullscreen}>
-        <StreamPane videoId={event.youtubeVideoId} />
-      </main>
-    );
-  }
+  const isRailCollapsed = event.layout === "fullscreen";
 
   return (
     <main
-      className={styles.docked}
+      className={`${styles.shell} ${isRailCollapsed ? styles.fullscreen : styles.docked}`}
       style={
         {
-          gridTemplateColumns: `1fr ${railWidth}px`,
           "--rail-w": `${railWidth}px`,
         } as React.CSSProperties
       }
     >
       <StreamPane videoId={event.youtubeVideoId} />
-      <RailResizer width={railWidth} onChange={setRailWidth} />
-      <VotingRail
-        question={question ?? null}
-        results={results ?? null}
-        joinUrl={event.joinUrl}
-        joined={joined}
-      />
+      <RailResizer width={railWidth} onChange={setRailWidth} collapsed={isRailCollapsed} />
+      <div className={styles.railViewport} aria-hidden={isRailCollapsed}>
+        <div className={styles.railInner}>
+          <VotingRail
+            question={question ?? null}
+            results={results ?? null}
+            joinUrl={event.joinUrl}
+            joined={joined}
+          />
+        </div>
+      </div>
+      <div
+        className={`${styles.fullscreenQr}${
+          isRailCollapsed && event.showFullscreenQr ? ` ${styles.fullscreenQrVisible}` : ""
+        }`}
+        aria-hidden={!isRailCollapsed || !event.showFullscreenQr}
+      >
+        <JoinQR url={event.joinUrl} />
+      </div>
     </main>
   );
 }

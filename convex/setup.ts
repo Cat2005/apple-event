@@ -59,6 +59,7 @@ export const init = mutation({
       await ctx.db.insert("event", {
         mode: "idle",
         layout: "dock",
+        showFullscreenQr: false,
         youtubeVideoId: "39BalPDuTo0",
         joinUrl: joinUrl ?? "http://localhost:3000",
         reloadNonce: 0,

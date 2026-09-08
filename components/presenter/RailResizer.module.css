@@ -11,6 +11,10 @@
   align-items: center;
   justify-content: center;
   outline: none;
+  opacity: 1;
+  transition:
+    right 520ms var(--ease),
+    opacity 180ms var(--ease);
 }
 
 .grip {
@@ -29,6 +33,15 @@
 
 .active .grip {
   background: var(--text);
+}
+
+.active {
+  transition: none;
+}
+
+.collapsed {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .readout {
@@ -50,4 +63,10 @@
   inset: 0;
   z-index: 4;
   cursor: col-resize;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .handle {
+    transition: none;
+  }
 }

@@ -29,11 +29,14 @@ export function LiveQuestion({ token, question, total, counts }: Props) {
   const resolved = question.status === "resolved";
 
   return (
-    <section className={`${s.card} ${s.live}`}>
+    <li className={`${s.card} ${s.live}`}>
       <div className={s.spread}>
-        <span className={s.kicker}>On screen</span>
+        <span className={s.liveLabel}>
+          <span className={s.liveDot} />
+          On screen{resolved ? " · Resolved" : ""}
+        </span>
         <span className={s.meta}>
-          {total} {total === 1 ? "vote" : "votes"}
+          #{question.order} · {total} {total === 1 ? "vote" : "votes"}
         </span>
       </div>
 
@@ -150,7 +153,7 @@ export function LiveQuestion({ token, question, total, counts }: Props) {
             Edit
           </button>
           <button className={s.btn} onClick={() => void clearQuestion({ token })}>
-            Take off screen
+            Take off screen &amp; collapse sidebar
           </button>
           <button
             className={`${s.btn} ${s.bad}`}
@@ -165,6 +168,6 @@ export function LiveQuestion({ token, question, total, counts }: Props) {
         </div>
         </>
       )}
-    </section>
+    </li>
   );
 }

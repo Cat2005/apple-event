@@ -6,23 +6,78 @@
   font-size: 14px;
 }
 
-.docked,
-.fullscreen {
+.shell {
   position: relative; /* the resize handle is absolutely positioned against this */
   height: 100dvh;
+  display: grid;
   overflow: hidden;
   background: var(--bg);
+  transition: grid-template-columns 520ms var(--ease);
 }
 
 /* Stream left, voting dock right. The column width is set inline and dragged at
    the divider — see RailResizer. This value is only the pre-hydration default. */
 .docked {
-  display: grid;
-  grid-template-columns: 1fr 300px;
+  grid-template-columns: minmax(0, 1fr) var(--rail-w, 300px);
 }
 
-/* No dock: the livestream owns the whole screen. */
+/* Keep one tree mounted so the stream does not restart while the rail closes. */
 .fullscreen {
-  display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr) 0;
+}
+
+.railViewport {
+  position: relative;
+  min-width: 0;
+  height: 100dvh;
+  overflow: hidden;
+  opacity: 1;
+  transform: translateX(0);
+  transition:
+    opacity 240ms var(--ease),
+    transform 520ms var(--ease);
+}
+
+.railInner {
+  position: absolute;
+  inset-block: 0;
+  right: 0;
+  width: var(--rail-w, 300px);
+}
+
+.fullscreen .railViewport {
+  opacity: 0;
+  transform: translateX(28px);
+  pointer-events: none;
+}
+
+.fullscreenQr {
+  position: absolute;
+  top: clamp(18px, 2.5vw, 40px);
+  right: clamp(18px, 2.5vw, 40px);
+  z-index: 3;
+  --qr-size: clamp(92px, 10vw, 150px);
+  opacity: 0;
+  transform: translateY(-14px) scale(0.96);
+  pointer-events: none;
+  transition:
+    opacity 260ms var(--ease) 120ms,
+    transform 420ms var(--ease) 80ms;
+}
+
+.fullscreenQr > div {
+  flex-direction: row-reverse;
+}
+
+.fullscreenQrVisible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shell,
+  .railViewport,
+  .fullscreenQr {
+    transition: none;
+  }
 }

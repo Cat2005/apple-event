@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import styles from "./BouncingLogo.module.css";
 
-const SPEED = 46; // px per second
+const SPEED = 69; // px per second — 50% faster than the original 46px/s
 const RATIO = 317 / 257; // public/apple-logo.png, cropped to its artwork
 
 /** DVD-style bounce. Position lives in a ref so React never re-renders on a frame. */
@@ -32,10 +32,22 @@ export function BouncingLogo({ width = 150 }: { width?: number }) {
       state.x += state.dx * SPEED * dt;
       state.y += state.dy * SPEED * dt;
 
-      if (state.x <= 0) (state.x = 0), (state.dx = 1);
-      if (state.x >= maxX) (state.x = maxX), (state.dx = -1);
-      if (state.y <= 0) (state.y = 0), (state.dy = 1);
-      if (state.y >= maxY) (state.y = maxY), (state.dy = -1);
+      if (state.x <= 0) {
+        state.x = 0;
+        state.dx = 1;
+      }
+      if (state.x >= maxX) {
+        state.x = maxX;
+        state.dx = -1;
+      }
+      if (state.y <= 0) {
+        state.y = 0;
+        state.dy = 1;
+      }
+      if (state.y >= maxY) {
+        state.y = maxY;
+        state.dy = -1;
+      }
 
       logo.style.transform = `translate3d(${state.x}px, ${state.y}px, 0)`;
       frame = requestAnimationFrame(tick);
