@@ -13,7 +13,7 @@ export function WifiQR() {
       <div className={styles.card}>
         {/* Plain <img>: next/image would resample and soften the QR modules. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className={styles.qr} src="/wifi-qr.png" alt="QR code to join the wifi" />
+        <img className={styles.qr} src="/wifi-qr.jpg" alt="QR code to join the wifi" />
       </div>
     </div>
   );
