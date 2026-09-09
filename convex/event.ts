@@ -38,6 +38,7 @@ export const setSettings = mutation({
     spotifyUrl: v.optional(v.string()),
     joinUrl: v.optional(v.string()),
     showFullscreenQr: v.optional(v.boolean()),
+    showWifiQr: v.optional(v.boolean()),
   },
   handler: async (ctx, { token, ...settings }) => {
     requireAdmin(token);

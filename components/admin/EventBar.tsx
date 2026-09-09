@@ -44,6 +44,20 @@ export function EventBar({ token, event }: { token: string; event: Doc<"event"> 
           <span className={s.controlHint}>
             {isIdle ? "Shows the waiting screen." : "Shows the livestream."}
           </span>
+          <label className={s.checkRow}>
+            <input
+              className={s.checkInput}
+              type="checkbox"
+              checked={event.showWifiQr ?? false}
+              onChange={(e) => void setSettings({ token, showWifiQr: e.target.checked })}
+            />
+            <span>
+              <span className={s.checkTitle}>Show wifi QR code</span>
+              <span className={s.checkHint}>
+                Adds a &ldquo;Scan for Wifi&rdquo; code to the idle screen and the sidebar.
+              </span>
+            </span>
+          </label>
         </fieldset>
 
         <fieldset className={s.controlGroup} disabled={isIdle}>

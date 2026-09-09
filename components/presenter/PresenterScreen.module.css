@@ -97,10 +97,6 @@
     transform 420ms var(--ease) 80ms;
 }
 
-.fullscreenQr > div {
-  flex-direction: row-reverse;
-}
-
 .fullscreenQrVisible {
   opacity: 1;
   transform: none;

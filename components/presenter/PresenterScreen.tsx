@@ -52,6 +52,7 @@ export function PresenterScreen() {
             results={results ?? null}
             joinUrl={event.joinUrl}
             joined={joined}
+            showWifiQr={event.showWifiQr ?? false}
           />
         </div>
       </div>
@@ -70,6 +71,7 @@ export function PresenterScreen() {
         joinUrl={event.joinUrl}
         spotifyUrl={event.spotifyUrl}
         joined={joined}
+        showWifiQr={event.showWifiQr ?? false}
       />
     </main>
   );

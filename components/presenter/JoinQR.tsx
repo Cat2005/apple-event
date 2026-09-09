@@ -23,6 +23,7 @@ export function JoinQR({ url }: { url: string }) {
 
   return (
     <div className={styles.wrap}>
+      <span className={styles.label}>Vote</span>
       <div className={styles.card}>
         {svg && <div className={styles.qr} dangerouslySetInnerHTML={{ __html: svg }} />}
       </div>

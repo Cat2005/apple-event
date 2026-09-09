@@ -3,6 +3,7 @@
 import { BouncingLogo } from "./BouncingLogo";
 import { JoinQR } from "./JoinQR";
 import { SpotifyDock } from "./SpotifyDock";
+import { WifiQR } from "./WifiQR";
 import styles from "./IdleScreen.module.css";
 
 type Props = {
@@ -10,9 +11,10 @@ type Props = {
   joinUrl: string;
   spotifyUrl: string | undefined;
   joined: number | undefined;
+  showWifiQr: boolean;
 };
 
-export function IdleScreen({ active, joinUrl, spotifyUrl, joined }: Props) {
+export function IdleScreen({ active, joinUrl, spotifyUrl, joined, showWifiQr }: Props) {
   return (
     <div
       className={`${styles.screen}${active ? ` ${styles.active}` : ""}`}
@@ -31,6 +33,7 @@ export function IdleScreen({ active, joinUrl, spotifyUrl, joined }: Props) {
 
       <div className={styles.corner}>
         <JoinQR url={joinUrl} />
+        {showWifiQr && <WifiQR />}
       </div>
 
       {active ? <SpotifyDock url={spotifyUrl} /> : null}

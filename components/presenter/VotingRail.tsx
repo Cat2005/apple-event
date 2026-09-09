@@ -5,6 +5,7 @@ import { ConnectionDot } from "@/components/common/ConnectionDot";
 import { JoinQR } from "./JoinQR";
 import { Histogram } from "./Histogram";
 import { ResultBars } from "./ResultBars";
+import { WifiQR } from "./WifiQR";
 import styles from "./VotingRail.module.css";
 
 type Props = {
@@ -12,15 +13,17 @@ type Props = {
   results: { total: number; counts: Record<string, number>; numbers: number[] } | null;
   joinUrl: string;
   joined: number | undefined;
+  showWifiQr: boolean;
 };
 
-export function VotingRail({ question, results, joinUrl, joined }: Props) {
+export function VotingRail({ question, results, joinUrl, joined, showWifiQr }: Props) {
   const total = results?.total ?? 0;
 
   return (
     <section className={styles.rail}>
       <header className={styles.header}>
         <JoinQR url={joinUrl} />
+        {showWifiQr && <WifiQR />}
       </header>
 
       <div className={styles.body}>

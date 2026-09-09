@@ -55,6 +55,9 @@
   position: absolute;
   left: var(--sp-7);
   bottom: var(--sp-7);
+  display: flex;
+  align-items: flex-end;
+  gap: var(--sp-5);
 }
 
 @media (prefers-reduced-motion: reduce) {
